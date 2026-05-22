@@ -20,7 +20,7 @@ Small **local dev** web app to publish JSON messages to Kafka using [KafkaJS](ht
 
 | Variable | Purpose |
 |----------|---------|
-| `KAFKA_BROKERS` | **Required.** Comma-separated brokers (e.g. `kafka:9092` in Docker on `bff`, `localhost:29092` from the host when sports-service’s Kafka maps `29092:29092`, or integration bootstrap servers). |
+| `KAFKA_BROKERS` | **Required.** Comma-separated brokers (e.g. `kafka:9092` in Docker on `bff`, `localhost:29092` from the host, or integration bootstrap servers). |
 | `PORT` | HTTP port (default `3010`). |
 | `KAFKA_CLIENT_ID` | Kafka client id (default `kafka-test-publisher`). |
 | `KAFKA_USERNAME` / `KAFKA_PASSWORD` | When both are set, SASL is enabled (integration-style clusters). |
@@ -31,7 +31,7 @@ Optional: copy `.env.example` to `.env` (loaded automatically via `dotenv`).
 
 ## Run on the host (next to Docker Kafka)
 
-From the machine where Docker exposes Kafka (e.g. `localhost:29092` for the default broker in [sports-service/docker-compose.yml](../sports-service/docker-compose.yml)):
+From the machine where Docker exposes Kafka (e.g. `localhost:29092` for the default broker):
 
 ```bash
 cd kafka-publisher
@@ -49,16 +49,16 @@ Open http://localhost:3010 (or your `PORT`).
 
 This does **not** require joining the `bff` network; it only needs a reachable broker address.
 
-## Run with Docker (same network as sports-service)
+## Run with Docker (same network as your service)
 
-[sports-service/docker-compose.yml](../sports-service/docker-compose.yml) defines an attachable network named **`bff`**. This project’s `docker-compose.yml` joins that **external** network and defaults to **`KAFKA_BROKERS=kafka:9092`** so the container talks to the same hostname as services inside that compose file.
+Your service's `docker-compose.yml` can define an attachable network named **`bff`**. This project's `docker-compose.yml` joins that **external** network and defaults to **`KAFKA_BROKERS=kafka:9092`** so the container talks to the same hostname as services inside that compose file.
 
 ### Prerequisites
 
-1. **Create `bff` and run Kafka** — this app does **not** start ZooKeeper or Kafka. From the `sports-service` directory, bring up at least:
+1. **Create `bff` and run Kafka** — this app does **not** start ZooKeeper or Kafka. From your service directory, bring up at least:
 
    ```bash
-   cd ../sports-service   # or your path to sports-service
+   cd ../your-service   # or your path to your service
    docker compose up -d zookeeper kafka
    ```
 
