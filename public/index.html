@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kafka test publisher</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Kafka test publisher</h1>
+      <p class="muted">
+        Local dev only. Set the full topic name (e.g. <code>int.offer.offer_domain</code>). Load a Kafdrop-style JSON array
+        from a file or paste it below — headers and keys live inside each message object.
+      </p>
+
+      <form id="form" class="form">
+        <label class="field">
+          <span>Topic</span>
+          <input type="text" id="topic" name="topic" required placeholder="int.offer.offer_domain" autocomplete="off" />
+        </label>
+
+        <div class="field">
+          <span>Messages (JSON array)</span>
+          <div class="file-row">
+            <input type="file" id="file" accept=".json,application/json" class="visually-hidden" />
+            <button type="button" id="pick-file" class="btn secondary">Choose JSON file…</button>
+            <span id="file-name" class="file-name muted"></span>
+          </div>
+          <textarea
+            id="messages"
+            name="messages"
+            rows="14"
+            spellcheck="false"
+            placeholder='Paste a JSON array, or load a file like messages.json (Kafdrop export: headers, key, value per item).'
+          ></textarea>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submit" class="btn primary">Publish</button>
+        </div>
+      </form>
+
+      <pre id="result" class="result" hidden></pre>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

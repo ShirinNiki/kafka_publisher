@@ -1,0 +1,17 @@
+# Attach to the same Docker network as sports-service (see sports-service/docker-compose.yml: networks.bff.name: bff).
+# Start sports-service (or at least create the `bff` network) before bringing this stack up.
+
+services:
+  kafka-publisher:
+    build: .
+    ports:
+      - "3010:3010"
+    environment:
+      KAFKA_BROKERS: kafka:9092
+      PORT: "3010"
+    networks:
+      - bff
+
+networks:
+  bff:
+    external: true
